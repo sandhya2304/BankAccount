@@ -46,7 +46,7 @@ public class AAccountBankApplication implements CommandLineRunner
 		 Client c2 = clientRepository.save(new Client("shyam","shyam@gmail.com"));    
 		 
 	
-		 Account acc1=accountRepository.save(new CurrentAccount("c1",new Date(),6000,c2,5.5));
+		 Account acc1=accountRepository.save(new CurrentAccount("c1",new Date(),6000,c1,600));
 		 
 		 Account acc2=accountRepository.save(new SavingAccount("c2",new Date(),6000,c2,5.5));
 		 
@@ -66,7 +66,7 @@ public class AAccountBankApplication implements CommandLineRunner
 		 accountDetailRepository.save(new Withdrawl(new Date(),900,acc2));
 		 
 		 bankService.pay("c1", 111);
-		 */
 		 
+		 */
 	}
 }

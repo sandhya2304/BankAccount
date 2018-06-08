@@ -32,7 +32,7 @@ public class BankServiceImpl implements IBankService
 	@Override
 	public Account toConsultAccount(String codeAcct) {
 		Account acc=accountRepository.findOne(codeAcct);
-		if(acc==null) throw new RuntimeException("account not found");
+		if(acc==null) throw new RuntimeException("account not found"+codeAcct);
 		return acc;
 	}
 
@@ -73,6 +73,10 @@ public class BankServiceImpl implements IBankService
 	@Override
 	public void transfer(String codeAcct1, String codeAcct2, double amt) 
 	{
+		
+		if(codeAcct1.equals(codeAcct2))
+			throw new RuntimeException("inpossible amount transfer to the same account!!!");
+		
 	    withdraw(codeAcct1, amt);
 	    pay(codeAcct2, amt);
 		
@@ -81,8 +85,7 @@ public class BankServiceImpl implements IBankService
 	@Override
 	public Page<AccountDetails> listOperation(String codeAcct, int page, int size)
 	{
-		 
-		
+		 	
 		return accountDetailRepository.listOperation(codeAcct, new PageRequest(page, size));
 	}
 	

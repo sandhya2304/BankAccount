@@ -35,8 +35,6 @@ public abstract class AccountDetails implements Serializable
 	}
 
 
-	
-
 	public AccountDetails(Date dateOperation, double amount, Account accounts) {
 		super();
 		this.dateOperation = dateOperation;

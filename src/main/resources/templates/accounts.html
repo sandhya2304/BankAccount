@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="template1" >
+<head>
+<meta charset="utf-8" />
+<title>Vote Bank</title>
+</head>
+<body>
+
+	<div layout:fragment="content">
+		<div class="col-md-6">
+			<div class="panel panel-primary">
+				<div class="panel-heading">Consult of the account</div>
+				<div class="panel-body">
+					<form th:action="@{/consultAccount}" method="get">
+						<div>
+							<label>Code Account:</label> 
+							<input type="text" name="codeAccount" th:value="${codeAccount}" />
+							<button type="submit" class="btn btn-primary">OK</button>
+						</div>
+					</form>
+					<div class="text-danger" th:if="${exception}" th:text="${exception.message}">
+					
+					
+					</div>
+				</div>
+
+			</div>
+
+
+			<div class="panel panel-primary" th:if="${account}">
+				<div class="panel-heading">Information of the account</div>
+				<div class="panel-body">
+				
+				    <div>
+						<label>Client:</label> <label th:text="${account.client.name}"></label>
+					</div>
+					<div>
+						<label>Code:</label> <label th:text="${account.codeAccount}"></label>
+					</div>
+					<div>
+						<label>Balance:</label> <label th:text="${account.balance}"></label>
+					</div>
+					<div>
+						<label>Date Creation:</label> <label
+							th:text="${account.dateCreation}"></label>
+					</div>
+					<div>
+						<label>Type:</label> 
+						<label th:text="${account.class.simpleName}"></label>
+					</div>
+                    <div th:if="${account.class.simpleName=='CurrentAccount'}">
+						<label>Decouvert:</label>
+						 <label th:text="${account.decouvert}"></label>
+					</div>
+					<div th:if="${account.class.simpleName=='SavingAccount'}">
+						<label>Tax:</label>
+						 <label th:text="${account.tax}"></label>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+
+		<div class="col-md-6">
+			<div class="panel panel-primary" th:if="${account}">
+				<div class="panel-heading">Operation on the account</div>
+				<div class="panel-body">
+				  <form th:action="@{/saveOperation}" method="post">
+				    <div>
+				      <lable>Account</lable>
+				      <input type="hidden" name="codeAccount" th:value="${codeAccount}" />
+				      <label th:text="${codeAccount}"></label>
+				    </div>	
+				    <div>
+				      <input type="radio" name="typeOperation" value="pay" checked="checked" onchange="document.getElementById('forTransfer').style.display='none' " />
+				      <label>Payment</label>
+				      <input type="radio" name="typeOperation" value="with" onchange="document.getElementById('forTransfer').style.display='none' "/>
+				      <label>Withdraw</label>
+				      <input type="radio" name="typeOperation" value="tra" onchange="document.getElementById('forTransfer').style.display='block' "/>
+				      <label>Transfer</label>
+				    </div>	
+				    <div id="forTransfer" style="display: none;">
+				      <label>Pay:</label>
+				      <input type="text" name="codeAccount2" />
+				    </div>		
+				    <div>
+				      <label>Amount:</label>
+				      <input type="text" name="amount" />
+				    </div>	
+				    
+				    <div class="text-danger" 
+				            th:text="${#httpServletRequest.getParameter('error')}">
+				            
+				            </div>
+				    <button type="submit" class="btn btn-primary">Save</button>	
+				  </form>
+				</div>
+
+			</div>
+
+			<div class="panel panel-primary" th:if="${account}">
+				<div class="panel-heading">List of the account</div>
+				<div class="panel-body">
+				  <table class="table table striped">
+				    <tr>
+				      <th>Name</th><th>Type:</th><th>Date:</th><th>Balance</th>
+				    </tr>
+				    <tr th:each="o.listOperation">
+				      <td th:text="${o.codeOperation}"></td>
+				      <td th:text="${o.class.simpleName}"></td>
+				      <td th:text="${o.dateOperation}"></td>
+				      <td th:text="${o.amount}"></td>
+				    </tr>
+				  </table>
+				
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+
+</body>
+</html>

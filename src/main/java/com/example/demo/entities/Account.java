@@ -13,6 +13,7 @@ import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -27,8 +28,7 @@ import org.hibernate.annotations.GenericGenerator;
 @DiscriminatorColumn(name="type_account",discriminatorType=DiscriminatorType.STRING,length=2)
 public abstract class Account implements Serializable
 {
-	@Id @GeneratedValue(generator="system-uuid")
-	@GenericGenerator(name="system-uuid", strategy = "uuid")
+	@Id 
 	private String codeAccount;
 	private Date dateCreation;
 	private double balance;
